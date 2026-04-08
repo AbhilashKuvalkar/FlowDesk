@@ -1,0 +1,17 @@
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\bin\Debug\net10.0\FlowDesk.TicketService.Infrastructure.deps.json
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\bin\Debug\net10.0\FlowDesk.TicketService.Infrastructure.runtimeconfig.json
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\bin\Debug\net10.0\FlowDesk.TicketService.Infrastructure.dll
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\bin\Debug\net10.0\FlowDesk.TicketService.Infrastructure.pdb
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\bin\Debug\net10.0\FlowDesk.TicketService.Domain.dll
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\bin\Debug\net10.0\FlowDesk.TicketService.Domain.pdb
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.csproj.AssemblyReference.cache
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.AssemblyInfoInputs.cache
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.AssemblyInfo.cs
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.csproj.CoreCompileInputs.cache
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.C1D971EF.Up2Date
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.dll
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\refint\FlowDesk.TicketService.Infrastructure.dll
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.pdb
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\FlowDesk.TicketService.Infrastructure.genruntimeconfig.cache
+E:\projects\FlowDesk\FlowDesk.TicketService.Infrastructure\obj\Debug\net10.0\ref\FlowDesk.TicketService.Infrastructure.dll

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="FlowDesk.TicketService.Domain/FlowDesk.TicketService.Domain.csproj" />
+  <Project Path="FlowDesk.TicketService.Infrastructure/FlowDesk.TicketService.Infrastructure.csproj" />
+  <Project Path="FlowDesk.TicketService/FlowDesk.TicketService.csproj" />
+</Solution>
