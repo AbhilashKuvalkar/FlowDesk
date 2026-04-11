@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.*">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -16,6 +17,20 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FlowDesk.TicketService.Infrastructure\FlowDesk.TicketService.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Behaviours\" />
+    <Folder Include="Features\" />
+    <Folder Include="Features\Tickets\" />
+    <Folder Include="Features\Tickets\Commands\" />
+    <Folder Include="Features\Tickets\Commands\AssignTicket\" />
+    <Folder Include="Features\Tickets\Commands\CreateAgent\" />
+    <Folder Include="Features\Tickets\Commands\CreateTicket\" />
+    <Folder Include="Features\Tickets\Queries\" />
+    <Folder Include="Features\Tickets\Queries\GetTicketById\" />
+    <Folder Include="Features\Tickets\Queries\GetTicketsByStatus\" />
+    <Folder Include="Middlewares\" />
   </ItemGroup>
 
 </Project>
