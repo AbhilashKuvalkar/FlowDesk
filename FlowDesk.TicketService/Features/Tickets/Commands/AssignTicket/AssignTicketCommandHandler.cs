@@ -1,4 +1,6 @@
+using FlowDesk.TicketService.Domain.Common;
 using FlowDesk.TicketService.Domain.Exceptions;
+using FlowDesk.TicketService.Domain.Repositories;
 using FlowDesk.TicketService.Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +9,18 @@ namespace FlowDesk.TicketService.Features.Tickets.Commands.AssignTicket;
 
 public class AssignTicketCommandHandler : IRequestHandler<AssignTicketCommand>
 {
-    private readonly AppDbContext _appDbContext;
+    private readonly IAgentRepository _agentRepository;
+    private readonly ITicketRepository _ticketRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AssignTicketCommandHandler(AppDbContext appDbContext)
+    public AssignTicketCommandHandler(
+        IAgentRepository agentRepository,
+        ITicketRepository ticketRepository,
+        IUnitOfWork unitOfWork)
     {
-        _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
+        _agentRepository = agentRepository ?? throw new ArgumentNullException(nameof(agentRepository));
+        _ticketRepository = ticketRepository ?? throw new ArgumentNullException(nameof(ticketRepository));
+        _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public Task Handle(AssignTicketCommand request, CancellationToken cancellationToken)
@@ -22,23 +31,16 @@ public class AssignTicketCommandHandler : IRequestHandler<AssignTicketCommand>
 
     private async Task DoHandle(AssignTicketCommand request, CancellationToken cancellationToken)
     {
-        var ticket = await _appDbContext.Tickets
-            .FirstOrDefaultAsync(x => x.Id == request.TicketId
-                && x.TenantId == request.TenantId, cancellationToken);
-
-        var agent = await _appDbContext.Agents
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == request.AgentId &&
-                x.TenantId == request.TenantId, cancellationToken);
-
-        if (ticket is null)
+        var ticket = await _ticketRepository
+            .GetByIdAsync(request.TicketId, request.TenantId, cancellationToken) ??
             throw new TicketNotFoundException(request.TicketId);
 
-        if (agent is null)
+        var agent = await _agentRepository
+            .GetByIdAsync(request.AgentId, request.TenantId, cancellationToken) ??
             throw new AgentNotFoundException(request.AgentId);
 
         ticket.AssignTo(agent);
 
-        await _appDbContext.SaveChangesAsync(cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

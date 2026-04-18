@@ -1,3 +1,5 @@
+using FlowDesk.TicketService.Domain.Common;
+
 namespace FlowDesk.TicketService.Domain.Entities;
 
 public class Comment : BaseEntity

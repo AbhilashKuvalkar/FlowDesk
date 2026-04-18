@@ -1,4 +1,6 @@
-﻿namespace FlowDesk.TicketService.Domain.Entities;
+﻿using FlowDesk.TicketService.Domain.Common;
+
+namespace FlowDesk.TicketService.Domain.Entities;
 
 public class Agent : BaseEntity
 {

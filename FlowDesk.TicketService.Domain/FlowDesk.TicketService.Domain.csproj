@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="14.1.*" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Common\" />
     <Folder Include="Entities\" />
     <Folder Include="Enums\" />
+    <Folder Include="Events\" />
     <Folder Include="Exceptions\" />
   </ItemGroup>
 

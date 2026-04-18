@@ -1,4 +1,6 @@
-﻿using FlowDesk.TicketService.Domain.Enums;
+﻿using FlowDesk.TicketService.Domain.Common;
+using FlowDesk.TicketService.Domain.Enums;
+using FlowDesk.TicketService.Domain.Events;
 
 namespace FlowDesk.TicketService.Domain.Entities;
 
@@ -27,7 +29,7 @@ public class Ticket : BaseEntity
 
     public static Ticket Create(string title, string description, TicketPriority priority, TicketCategory category, Guid tenantId)
     {
-        return new Ticket
+        Ticket ticket = new()
         {
             Title = title,
             Description = description,
@@ -35,6 +37,11 @@ public class Ticket : BaseEntity
             Category = category,
             TenantId = tenantId
         };
+
+        ticket.RaiseDomainEvents(
+            new TicketCreatedEvent(ticket.Id, ticket.Title, ticket.TenantId));
+
+        return ticket;
     }
 
     public void AssignTo(Agent agent)
@@ -46,6 +53,8 @@ public class Ticket : BaseEntity
         AssignedAgent = agent;
         Status = TicketStatus.Assigned;
         UpdatedAt = DateTime.UtcNow;
+
+        RaiseDomainEvents(new TicketAssignedEvent(Id, agent.Id, TenantId));
     }
 
     public void StartProgress()
@@ -64,6 +73,8 @@ public class Ticket : BaseEntity
 
         Status = TicketStatus.Resolved;
         UpdatedAt = DateTime.UtcNow;
+
+        RaiseDomainEvents(new TicketResolvedEvent(Id, TenantId, UpdatedAt.Value));
     }
 
 }

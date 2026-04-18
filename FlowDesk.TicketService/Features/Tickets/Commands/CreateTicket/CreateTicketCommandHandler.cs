@@ -1,16 +1,21 @@
+using FlowDesk.TicketService.Domain.Common;
 using FlowDesk.TicketService.Domain.Entities;
-using FlowDesk.TicketService.Infrastructure.Persistence;
+using FlowDesk.TicketService.Domain.Repositories;
 using MediatR;
 
 namespace FlowDesk.TicketService.Features.Tickets.Commands.CreateTicket;
 
 public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, Guid>
 {
-    private readonly AppDbContext _appDbContext;
+    private readonly ITicketRepository _ticketRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public CreateTicketCommandHandler(AppDbContext appDbContext)
+    public CreateTicketCommandHandler(
+        ITicketRepository ticketRepository,
+        IUnitOfWork unitOfWork)
     {
-        _appDbContext = appDbContext ?? throw new ArgumentNullException(nameof(appDbContext));
+        this._ticketRepository = ticketRepository ?? throw new ArgumentNullException(nameof(ticketRepository));
+        this._unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
     }
 
     public Task<Guid> Handle(CreateTicketCommand request, CancellationToken cancellationToken)
@@ -29,8 +34,8 @@ public class CreateTicketCommandHandler : IRequestHandler<CreateTicketCommand, G
             request.TenantId
         );
 
-        await _appDbContext.Tickets.AddAsync(ticket, cancellationToken);
-        await _appDbContext.SaveChangesAsync(cancellationToken);
+        _ticketRepository.Add(ticket);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return ticket.Id;
     }

@@ -27,6 +27,8 @@
     <Folder Include="Features\Tickets\Commands\AssignTicket\" />
     <Folder Include="Features\Tickets\Commands\CreateAgent\" />
     <Folder Include="Features\Tickets\Commands\CreateTicket\" />
+    <Folder Include="Features\Tickets\Commands\ResolveTicket\" />
+    <Folder Include="Features\Tickets\EventHandlers\" />
     <Folder Include="Features\Tickets\Queries\" />
     <Folder Include="Features\Tickets\Queries\GetTicketById\" />
     <Folder Include="Features\Tickets\Queries\GetTicketsByStatus\" />

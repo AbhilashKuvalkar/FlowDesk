@@ -1,11 +1,14 @@
 using FlowDesk.TicketService.Behaviours;
+using FlowDesk.TicketService.Domain.Common;
 using FlowDesk.TicketService.Domain.Enums;
+using FlowDesk.TicketService.Domain.Repositories;
 using FlowDesk.TicketService.Features.Tickets.Commands.AssignTicket;
 using FlowDesk.TicketService.Features.Tickets.Commands.CreateAgent;
 using FlowDesk.TicketService.Features.Tickets.Commands.CreateTicket;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketById;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketsByStatus;
 using FlowDesk.TicketService.Infrastructure.Persistence;
+using FlowDesk.TicketService.Infrastructure.Persistence.Repositories;
 using FlowDesk.TicketService.Middlewares;
 using FluentValidation;
 using MediatR;
@@ -32,6 +35,10 @@ builder.Services.AddTransient(
     typeof(IPipelineBehavior<,>),
     typeof(ValidationBehaviour<,>)
 );
+
+builder.Services.AddScoped<IAgentRepository, AgentRepository>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
 
 var app = builder.Build();
 
