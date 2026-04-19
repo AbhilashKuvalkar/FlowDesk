@@ -1,0 +1,11 @@
+using FlowDesk.TicketService.Domain;
+
+namespace FlowDesk.TicketService.Features.Tickets.Queries.GetSlaPolicyQuery;
+
+public record SlaPolicyResponse(
+    string Name,
+    TicketPriority TicketPriority,
+    int ResponseTimeMinutes,
+    int ResolutionTimeMinutes,
+    Guid TenantId,
+    DateTime CreatedAt);

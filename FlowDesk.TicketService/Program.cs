@@ -7,6 +7,7 @@ using FlowDesk.TicketService.Features.Tickets.Commands.CreateAgent;
 using FlowDesk.TicketService.Features.Tickets.Commands.CreateTicket;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketById;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketsByStatus;
+using FlowDesk.TicketService.Infrastructure.Caching;
 using FlowDesk.TicketService.Infrastructure.Persistence;
 using FlowDesk.TicketService.Infrastructure.Persistence.Repositories;
 using FlowDesk.TicketService.Middlewares;
@@ -36,9 +37,17 @@ builder.Services.AddTransient(
     typeof(ValidationBehaviour<,>)
 );
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+    options.InstanceName = $"{nameof(FlowDesk)}:";
+});
+
 builder.Services.AddScoped<IAgentRepository, AgentRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
+builder.Services.AddScoped<ICacheService, RedisCacheService>();
+builder.Services.AddScoped<ISlaPolicyRepository, SlaPolicyRepository>();
 
 var app = builder.Build();
 

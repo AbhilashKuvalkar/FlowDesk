@@ -10,9 +10,12 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.*" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.*" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.*" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Caching\" />
     <Folder Include="Persistence\" />
     <Folder Include="Persistence\Configurations\" />
     <Folder Include="Persistence\Repositories\" />

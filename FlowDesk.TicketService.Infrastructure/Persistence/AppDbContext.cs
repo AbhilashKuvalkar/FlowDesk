@@ -9,16 +9,21 @@ public class AppDbContext : DbContext, IUnitOfWork
 {
     private readonly IPublisher _publisher;
 
+
     public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions, IPublisher publisher) : base(dbContextOptions)
     {
         _publisher = publisher ?? throw new ArgumentNullException(nameof(publisher));
     }
+
 
     public DbSet<Ticket> Tickets => Set<Ticket>();
 
     public DbSet<Agent> Agents => Set<Agent>();
 
     public DbSet<Comment> Comments => Set<Comment>();
+
+    public DbSet<SlaPolicy> SlaPolicies => Set<SlaPolicy>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
