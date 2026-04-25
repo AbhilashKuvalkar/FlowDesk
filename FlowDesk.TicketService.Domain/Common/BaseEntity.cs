@@ -8,7 +8,7 @@ public abstract class BaseEntity
     public Guid TenantId { get; protected set; }
 
 
-    private readonly List<IDomainEvent> _domainEvents = new();
+    private readonly List<IDomainEvent> _domainEvents = [];
     public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
 

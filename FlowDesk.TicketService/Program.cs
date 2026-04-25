@@ -12,6 +12,7 @@ using FlowDesk.TicketService.Infrastructure.Persistence;
 using FlowDesk.TicketService.Infrastructure.Persistence.Repositories;
 using FlowDesk.TicketService.Middlewares;
 using FluentValidation;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,20 @@ builder.Services.AddStackExchangeRedisCache(options =>
 {
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     options.InstanceName = $"{nameof(FlowDesk)}:";
+});
+
+builder.Services.AddMassTransit(x =>
+{
+    x.UsingRabbitMq((ctx, cfg) =>
+    {
+        cfg.Host(builder.Configuration.GetConnectionString("RabbitMQ"), h =>
+        {
+            h.Username("guest");
+            h.Password("guest");
+        });
+
+        cfg.ConfigureEndpoints(ctx);
+    });
 });
 
 builder.Services.AddScoped<IAgentRepository, AgentRepository>();

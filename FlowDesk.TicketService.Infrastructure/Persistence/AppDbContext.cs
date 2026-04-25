@@ -47,7 +47,7 @@ public class AppDbContext : DbContext, IUnitOfWork
             .ToList();
 
         var events = entities
-            .Select(x => x.DomainEvents)
+            .SelectMany(x => x.DomainEvents)
             .ToList();
 
         entities.ForEach(x => x.ClearDomainEvents());

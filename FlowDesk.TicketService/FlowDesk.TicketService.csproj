@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.*" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.*">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FlowDesk.TicketService.Infrastructure\FlowDesk.TicketService.Infrastructure.csproj" />
+    <ProjectReference Include="..\FlowDesk.Contracts\FlowDesk.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
