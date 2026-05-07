@@ -1,12 +1,15 @@
+using FlowDesk.Grpc;
 using FlowDesk.TicketService.Behaviours;
 using FlowDesk.TicketService.Domain.Common;
 using FlowDesk.TicketService.Domain.Enums;
 using FlowDesk.TicketService.Domain.Repositories;
+using FlowDesk.TicketService.Domain.Services;
 using FlowDesk.TicketService.Features.Tickets.Commands.AssignTicket;
 using FlowDesk.TicketService.Features.Tickets.Commands.CreateAgent;
 using FlowDesk.TicketService.Features.Tickets.Commands.CreateTicket;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketById;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketsByStatus;
+using FlowDesk.TicketService.GrpcClients;
 using FlowDesk.TicketService.Infrastructure.Caching;
 using FlowDesk.TicketService.Infrastructure.Persistence;
 using FlowDesk.TicketService.Infrastructure.Persistence.Repositories;
@@ -58,11 +61,22 @@ builder.Services.AddMassTransit(x =>
     });
 });
 
+builder.Services.AddGrpcClient<SlaService.SlaServiceClient>(options =>
+{
+    var url = builder.Configuration.GetConnectionString(nameof(SlaService));
+
+    if (string.IsNullOrWhiteSpace(url))
+        throw new ArgumentException("gRPC URL is not configured");
+
+    options.Address = new Uri(url);
+});
+
 builder.Services.AddScoped<IAgentRepository, AgentRepository>();
 builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<AppDbContext>());
 builder.Services.AddScoped<ICacheService, RedisCacheService>();
 builder.Services.AddScoped<ISlaPolicyRepository, SlaPolicyRepository>();
+builder.Services.AddScoped<ISlaServiceClient, SlaServiceClient>();
 
 var app = builder.Build();
 

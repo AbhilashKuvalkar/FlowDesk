@@ -1,6 +1,10 @@
 <Solution>
+  <Folder Name="/Protos/">
+    <File Path="/Protos/sla.proto" />
+  </Folder>
   <Project Path="FlowDesk.Contracts/FlowDesk.Contracts.csproj" />
   <Project Path="FlowDesk.NotificationService/FlowDesk.NotificationService.csproj" />
+  <Project Path="FlowDesk.SlaService/FlowDesk.SlaService.csproj" />
   <Project Path="FlowDesk.TicketService.Domain/FlowDesk.TicketService.Domain.csproj" />
   <Project Path="FlowDesk.TicketService.Infrastructure/FlowDesk.TicketService.Infrastructure.csproj" />
   <Project Path="FlowDesk.TicketService/FlowDesk.TicketService.csproj" />

@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "FlowDesk.Grpc";
+
+package sla;
+
+service SlaService {
+    rpc GetSlaPolicyByPriority (GetSlaPolicyRequest) returns (GetSlaPolicyResponse);
+}
+
+message GetSlaPolicyRequest {
+    string tenant_id = 1;
+    string priority = 2;
+}
+
+message GetSlaPolicyResponse {
+    string policy_id = 1;
+    string name = 2;
+    string priority = 3;
+    int32 response_time_minutes = 4;
+    int32 resolution_time_minutes = 5;
+    bool found = 6;
+}

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.*" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.76.*" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.*">
@@ -23,8 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Behaviours\" />
-    <Folder Include="Features\" />
-    <Folder Include="Features\Tickets\" />
     <Folder Include="Features\Tickets\Commands\" />
     <Folder Include="Features\Tickets\Commands\AssignTicket\" />
     <Folder Include="Features\Tickets\Commands\CreateAgent\" />
@@ -32,11 +31,15 @@
     <Folder Include="Features\Tickets\Commands\ResolveTicket\" />
     <Folder Include="Features\Tickets\Commands\UpdateSlaPolicy\" />
     <Folder Include="Features\Tickets\EventHandlers\" />
-    <Folder Include="Features\Tickets\Queries\" />
-    <Folder Include="Features\Tickets\Queries\GetSlaPolicyQuery\" />
+    <Folder Include="Features\Tickets\Queries\GetSlaPolicy\" />
+    <Folder Include="Features\Tickets\Queries\GetSlaStatus\" />
     <Folder Include="Features\Tickets\Queries\GetTicketById\" />
     <Folder Include="Features\Tickets\Queries\GetTicketsByStatus\" />
     <Folder Include="Middlewares\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\Protos\sla.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

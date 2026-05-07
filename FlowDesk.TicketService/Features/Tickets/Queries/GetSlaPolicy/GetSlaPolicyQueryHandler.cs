@@ -1,9 +1,7 @@
-using FlowDesk.TicketService.Domain.Common;
 using FlowDesk.TicketService.Domain.Repositories;
-using FlowDesk.TicketService.Infrastructure.Caching;
 using MediatR;
 
-namespace FlowDesk.TicketService.Features.Tickets.Queries.GetSlaPolicyQuery;
+namespace FlowDesk.TicketService.Features.Tickets.Queries.GetSlaPolicy;
 
 public class GetSlaPolicyQueryHandler : IRequestHandler<GetSlaPolicyQuery, SlaPolicyResponse?>
 {

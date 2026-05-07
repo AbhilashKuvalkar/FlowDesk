@@ -19,4 +19,9 @@ public class TicketRepository : ITicketRepository
         ArgumentNullException.ThrowIfNull(ticket);
         _context.Tickets.Add(ticket);
     }
+
+    public async Task<Ticket?> GetByIdAsNoTrackingAsync(Guid id, Guid tenantId, CancellationToken cancellationToken)
+        => await _context.Tickets
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id && x.TenantId == tenantId, cancellationToken);
 }

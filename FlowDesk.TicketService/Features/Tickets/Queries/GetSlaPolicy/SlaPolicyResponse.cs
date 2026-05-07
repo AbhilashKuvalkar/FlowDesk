@@ -1,6 +1,6 @@
 using FlowDesk.TicketService.Domain;
 
-namespace FlowDesk.TicketService.Features.Tickets.Queries.GetSlaPolicyQuery;
+namespace FlowDesk.TicketService.Features.Tickets.Queries.GetSlaPolicy;
 
 public record SlaPolicyResponse(
     string Name,

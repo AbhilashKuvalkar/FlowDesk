@@ -19,7 +19,7 @@ public class Ticket : BaseEntity
     public Guid? AssignedAgentId { get; private set; }
 
     public Agent? AssignedAgent { get; private set; }
-
+    
     private readonly List<Comment> _comments = [];
 
     public IReadOnlyCollection<Comment> Comments => _comments.AsReadOnly();
