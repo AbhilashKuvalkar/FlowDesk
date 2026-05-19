@@ -35,6 +35,7 @@ public class Ticket : BaseEntity
             Description = description,
             Priority = priority,
             Category = category,
+            Status = TicketStatus.Open,
             TenantId = tenantId
         };
 

@@ -9,6 +9,7 @@ using FlowDesk.TicketService.Features.Tickets.Commands.CreateAgent;
 using FlowDesk.TicketService.Features.Tickets.Commands.CreateTicket;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketById;
 using FlowDesk.TicketService.Features.Tickets.Queries.GetTicketsByStatus;
+using FlowDesk.TicketService.GraphQL.Schema;
 using FlowDesk.TicketService.GrpcClients;
 using FlowDesk.TicketService.Infrastructure.Caching;
 using FlowDesk.TicketService.Infrastructure.Persistence;
@@ -26,7 +27,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
@@ -78,6 +79,8 @@ builder.Services.AddScoped<ICacheService, RedisCacheService>();
 builder.Services.AddScoped<ISlaPolicyRepository, SlaPolicyRepository>();
 builder.Services.AddScoped<ISlaServiceClient, SlaServiceClient>();
 
+builder.Services.AddFlowDeskGraphQl();
+
 var app = builder.Build();
 
 app.UseExceptionHandler();
@@ -89,6 +92,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapGraphQL();
 
 app.MapPost("/tickets", async (CreateTicketCommand command, ISender sender) =>
 {

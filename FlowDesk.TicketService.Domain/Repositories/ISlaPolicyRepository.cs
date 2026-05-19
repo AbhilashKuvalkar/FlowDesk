@@ -1,4 +1,5 @@
 using FlowDesk.TicketService.Domain.Entities;
+using FlowDesk.TicketService.Domain.Enums;
 
 namespace FlowDesk.TicketService.Domain.Repositories;
 

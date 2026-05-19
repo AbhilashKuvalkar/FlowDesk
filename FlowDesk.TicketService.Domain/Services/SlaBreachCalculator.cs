@@ -1,15 +1,16 @@
 using FlowDesk.TicketService.Domain.Entities;
+using FlowDesk.TicketService.Domain.Enums;
 
 namespace FlowDesk.TicketService.Domain.Services;
 
 public static class SlaBreachCalculator
 {
-    public static bool IsBreaching(Ticket ticket, SlaPolicyDto slaPolicyDto)
+    public static bool IsBreaching(TicketStatus ticketStatus, DateTime createdAt, SlaPolicyDto slaPolicyDto)
     {
-        if (ticket.Status == Enums.TicketStatus.Resolved)
+        if (ticketStatus == TicketStatus.Resolved)
             return false;
 
-        var totalMinutes = (DateTime.UtcNow - ticket.CreatedAt).TotalMinutes;
+        var totalMinutes = (DateTime.UtcNow - createdAt).TotalMinutes;
         return totalMinutes > slaPolicyDto.ResponseTimeMinutes;
     }
 }

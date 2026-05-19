@@ -1,5 +1,5 @@
 using FlowDesk.Grpc;
-using FlowDesk.TicketService.Domain;
+using FlowDesk.TicketService.Domain.Enums;
 using FlowDesk.TicketService.Domain.Services;
 
 namespace FlowDesk.TicketService.GrpcClients;

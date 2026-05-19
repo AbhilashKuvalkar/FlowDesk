@@ -1,4 +1,4 @@
-using FlowDesk.TicketService.Domain;
+using FlowDesk.TicketService.Domain.Enums;
 using FluentValidation;
 
 namespace FlowDesk.TicketService.Features.Tickets.Commands.UpdateSlaPolicy;

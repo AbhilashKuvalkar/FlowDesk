@@ -34,7 +34,7 @@ public class GetSlaStatusQueryHandler : IRequestHandler<GetSlaStatusQuery, SlaSt
         if (policy is null)
             return null;
 
-        var isBreaching = SlaBreachCalculator.IsBreaching(ticket, policy);
+        var isBreaching = SlaBreachCalculator.IsBreaching(ticket.Status, ticket.CreatedAt, policy);
         
         return new SlaStatusResponse(
             ticket.Id,

@@ -1,4 +1,4 @@
-using FlowDesk.TicketService.Domain;
+using FlowDesk.TicketService.Domain.Enums;
 using MediatR;
 
 namespace FlowDesk.TicketService.Features.Tickets.Commands.UpdateSlaPolicy;

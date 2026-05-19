@@ -1,4 +1,4 @@
-using FlowDesk.TicketService.Domain;
+using FlowDesk.TicketService.Domain.Enums;
 
 namespace FlowDesk.TicketService.Features.Tickets.Queries.GetSlaPolicy;
 

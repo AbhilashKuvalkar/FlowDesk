@@ -1,4 +1,4 @@
-﻿namespace FlowDesk.TicketService.Domain;
+﻿namespace FlowDesk.TicketService.Domain.Enums;
 
 public enum TicketPriority
 {

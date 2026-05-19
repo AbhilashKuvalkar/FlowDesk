@@ -1,6 +1,6 @@
-using FlowDesk.TicketService.Domain;
 using FlowDesk.TicketService.Domain.Common;
 using FlowDesk.TicketService.Domain.Entities;
+using FlowDesk.TicketService.Domain.Enums;
 using FlowDesk.TicketService.Domain.Exceptions;
 using FlowDesk.TicketService.Domain.Repositories;
 using FlowDesk.TicketService.Infrastructure.Caching;

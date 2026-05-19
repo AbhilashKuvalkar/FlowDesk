@@ -9,6 +9,8 @@
   <ItemGroup>
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.*" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.76.*" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="16.0.*" />
+    <PackageReference Include="HotChocolate.Data.EntityFramework" Version="16.0.*" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.5.*" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.*" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.*">
@@ -35,6 +37,11 @@
     <Folder Include="Features\Tickets\Queries\GetSlaStatus\" />
     <Folder Include="Features\Tickets\Queries\GetTicketById\" />
     <Folder Include="Features\Tickets\Queries\GetTicketsByStatus\" />
+    <Folder Include="GraphQL\" />
+    <Folder Include="GraphQL\DataLoaders\" />
+    <Folder Include="GraphQL\Queries\" />
+    <Folder Include="GraphQL\Schema\" />
+    <Folder Include="GraphQL\Types\" />    
     <Folder Include="Middlewares\" />
   </ItemGroup>
 

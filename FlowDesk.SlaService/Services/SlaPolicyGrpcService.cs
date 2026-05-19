@@ -1,5 +1,5 @@
 using FlowDesk.Grpc;
-using FlowDesk.TicketService.Domain;
+using FlowDesk.TicketService.Domain.Enums;
 using FlowDesk.TicketService.Domain.Repositories;
 using Grpc.Core;
 using static FlowDesk.Grpc.SlaService;
