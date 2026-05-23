@@ -1,0 +1,98 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - infrastructure/bicep/**
+    exclude:
+      - FlowDesk.TicketService/**
+      - FlowDesk.NotificationService/**
+      - FlowDesk.SlaService/**
+
+parameters:
+  - name: environment
+    displayName: Target Environment
+    type: string
+    default: dev
+    values:
+      - dev
+      - prod
+
+variables:
+  - group: flowdesk-${{ parameters.environment }}-secret
+  - name: resourceGroupName
+    value: flowdesk-${{ parameters.environment }}-rg
+  - name: location
+    value: southindia
+
+stages:
+  - stage: Validate
+    displayName: Validate Bicep
+    jobs:
+      - job: LintAndValidate
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: AzureCLI@2
+            displayName: Lint Bicep
+            inputs:
+              azureSubscription: flowdesk-azure-subscription
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az bicep lint \
+                  --file infrastructure/bicep/main.bicep
+
+          - task: AzureCLI@2
+            displayName: What-If Analysis
+            inputs:
+              azureSubscription: flowdesk-azure-subscription
+              scriptType: bash
+              scriptLocation: inlineScript
+              inlineScript: |
+                az deployment group what-if \
+                  --resource-group $(resourceGroupName) \
+                  --template-file infrastructure/bicep/main.bicep \
+                  --parameters infrastructure/bicep/parameters/${{ parameters.environment }}.bicepparam \
+                  --parameters sqlAdminPassword=$SQL_ADMIN_PASSWORD
+            env:
+              SQL_ADMIN_PASSWORD: $(sqlAdminPassword)
+
+  - stage: Deploy
+    displayName: Deploy Infrastructure
+    dependsOn: Validate
+    jobs:
+      - deployment: DeployBicep
+        environment: ${{ parameters.environment }}
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureCLI@2
+                  displayName: Create Resource Group
+                  inputs:
+                    azureSubscription: flowdesk-azure-connection
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az group create \
+                        --name $(resourceGroupName) \
+                        --location $(location)
+
+                - task: AzureCLI@2
+                  displayName: Deploy Bicep
+                  inputs:
+                    azureSubscription: flowdesk-azure-connection
+                    scriptType: bash
+                    scriptLocation: inlineScript
+                    inlineScript: |
+                      az deployment group create \
+                        --resource-group $(resourceGroupName) \
+                        --template-file infrastructure/bicep/main.bicep \
+                        --parameters infrastructure/bicep/parameters/${{ parameters.environment }}.bicepparam \ 
+                        --parameters sqlAdminPassword=$SQL_ADMIN_PASSWORD
+                  env:
+                    SQL_ADMIN_PASSWORD: $(sqlAdminPassword)
