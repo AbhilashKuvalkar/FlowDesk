@@ -10,6 +10,7 @@ trigger:
       - FlowDesk.NotificationService/**
       - FlowDesk.SlaService/**
 
+# Parameters selected via DevOps pipeline
 parameters:
   - name: environment
     displayName: Target Environment
@@ -19,6 +20,7 @@ parameters:
       - dev
       - prod
 
+# Local variables
 variables:
   - group: flowdesk-${{ parameters.environment }}-secret
   - name: resourceGroupName
@@ -26,6 +28,7 @@ variables:
   - name: location
     value: southindia
 
+# Different stages to be performed while deploying the resources
 stages:
   - stage: Validate
     displayName: Validate Bicep
