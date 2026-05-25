@@ -54,6 +54,10 @@ stages:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
+                az group create \
+                  --name $(resourceGroupName) \
+                  --location $(location)
+                  
                 az deployment group what-if \
                   --resource-group $(resourceGroupName) \
                   --template-file infrastructure/bicep/main.bicep \
