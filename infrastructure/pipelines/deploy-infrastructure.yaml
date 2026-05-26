@@ -45,7 +45,7 @@ stages:
               scriptLocation: inlineScript
               inlineScript: |
                 az bicep lint \
-                  --file infrastructure/bicep/main.bicep
+                  --file $(Build.SourcesDirectory)/infrastructure/bicep/main.bicep
 
           - task: AzureCLI@2
             displayName: What-If Analysis
@@ -54,6 +54,12 @@ stages:
               scriptType: bash
               scriptLocation: inlineScript
               inlineScript: |
+                echo "Current directory: "
+                pwd
+                
+                echo "Files: "
+                ls -la
+
                 az group create \
                   --name $(resourceGroupName) \
                   --location $(location)
@@ -96,6 +102,12 @@ stages:
                     scriptType: bash
                     scriptLocation: inlineScript
                     inlineScript: |
+                      echo "Current directory: "
+                      pwd
+                      
+                      echo "Files: "
+                      ls -la
+
                       az deployment group create \
                         --resource-group $(resourceGroupName) \
                         --template-file $(Build.SourcesDirectory)/infrastructure/bicep/main.bicep \
