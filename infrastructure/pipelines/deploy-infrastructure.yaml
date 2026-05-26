@@ -37,6 +37,8 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
+          - checkout: self
+
           - task: AzureCLI@2
             displayName: Lint Bicep
             inputs:
@@ -58,7 +60,7 @@ stages:
                 pwd
                 
                 echo "Files: "
-                ls -la
+                ls -R $(Build.SourcesDirectory)
 
                 az group create \
                   --name $(resourceGroupName) \
@@ -84,6 +86,8 @@ stages:
           runOnce:
             deploy:
               steps:
+                - checkout: self
+
                 - task: AzureCLI@2
                   displayName: Create Resource Group
                   inputs:
@@ -106,7 +110,7 @@ stages:
                       pwd
                       
                       echo "Files: "
-                      ls -la
+                      ls -R $(Build.SourcesDirectory)
 
                       az deployment group create \
                         --resource-group $(resourceGroupName) \
