@@ -37,8 +37,6 @@ stages:
         pool:
           vmImage: ubuntu-latest
         steps:
-          - checkout: self
-
           - task: AzureCLI@2
             displayName: Lint Bicep
             inputs:
@@ -86,8 +84,6 @@ stages:
           runOnce:
             deploy:
               steps:
-                - checkout: self
-
                 - task: AzureCLI@2
                   displayName: Create Resource Group
                   inputs:
