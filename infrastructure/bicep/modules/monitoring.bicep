@@ -3,7 +3,7 @@ param environmentName string
 
 var logAnalyticsWorkspaceName = 'flowdesk-logAnalytics-${environmentName}'
 var applicationInsightsName = 'flowdesk-appInsights-${environmentName}'
-var retentionInDays = 7
+var retentionInDays = 30
 
 resource logAnalyticsWorkspace 'Microsoft.OperationalInsights/workspaces@2025-07-01' = {
   name: logAnalyticsWorkspaceName
