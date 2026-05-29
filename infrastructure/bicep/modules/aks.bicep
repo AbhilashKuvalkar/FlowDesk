@@ -17,7 +17,7 @@ resource aks 'Microsoft.ContainerService/managedClusters@2026-02-01' = {
       {
         name: 'system'
         count: nodeCount
-        vmSize: 'Standard_B2s'
+        vmSize: 'Standard_D2s_v3'
         osType: 'Linux'
         mode: 'System'
       }
