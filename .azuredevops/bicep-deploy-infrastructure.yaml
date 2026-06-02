@@ -56,7 +56,7 @@ stages:
               inlineScript: |
                 echo "Current directory: "
                 pwd
-                
+
                 echo "Files: "
                 ls -R $(Build.SourcesDirectory)
 
@@ -105,7 +105,7 @@ stages:
                     inlineScript: |
                       echo "Current directory: "
                       pwd
-                      
+
                       echo "Files: "
                       ls -R $(Build.SourcesDirectory)
 

@@ -1,0 +1,138 @@
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - infrastructure/terraform/**
+    exclude:
+      - FlowDesk.TicketService/**
+      - FlowDesk.NotificationService/**
+      - FlowDesk.SlaService/**
+
+# Parameters selected via DevOps pipeline
+parameters:
+  - name: environment
+    displayName: Target Environment
+    type: string
+    default: dev
+    values:
+      - dev
+      - prod
+
+# Local variables
+variables:
+  - group: flowdesk-terraform-auth
+  - group: flowdesk-${{ parameters.environment }}-secrets
+  - name: workingDirectory
+    value: infrastructure/terraform
+  - name: terraformVersion
+    value: "1.15.5"
+
+stages:
+  - stage: Validate
+    displayName: Validate Terraform
+    jobs:
+      - job: ValidateTerraform
+        pool:
+          vmImage: ubuntu-latest
+        steps:
+          - task: TerraformInstaller@1
+            displayName: Install Terraform
+            inputs:
+              terraformVersion: $(terraformVersion)
+
+          - task: TerraformTaskV4@4
+            displayName: Terraform Init
+            inputs:
+              provider: azurerm
+              command: init
+              workingDirectory: $(workingDirectory)
+              backendServiceArm: flowdesk-azure-connection
+              backendAzureRmResourceGroupName: flowdesk-tfstate-rg
+              backendAzureRmStorageAccountName: flowdesktfstate
+              backendAzureRmContainerName: tfstate
+              backendAzureRmKey: flowdesk.tfstate
+            env:
+              ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+              ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+              ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+              ARM_TENANT_ID: $(ARM_TENANT_ID)
+
+          - task: TerraformTaskV4@4
+            displayName: Terraform Validate
+            inputs:
+              provider: azurerm
+              command: validate
+              workingDirectory: $(workingDirectory)
+
+          - task: TerraformTaskV4@4
+            displayName: Terraform Plan
+            inputs:
+              provider: azurerm
+              command: plan
+              workingDirectory: $(workingDirectory)
+              environmentServiceNameAzureRM: flowdesk-azure-connection
+            env:
+              ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+              ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+              ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+              ARM_TENANT_ID: $(ARM_TENANT_ID)
+              TF_VAR_environment_name: $(TF_VAR_environment_name)
+              TF_VAR_location: $(TF_VAR_location)
+              TF_VAR_sql_admin_login: $(TF_VAR_sql_admin_login)
+              TF_VAR_sql_admin_password: $(TF_VAR_sql_admin_password)
+
+  - stage: Deploy
+    displayName: Deploy Terraform
+    dependsOn: Validate
+    jobs:
+      - deployment: ApplyTerraform
+        environment: ${{ parameters.environment }}
+        pool:
+          vmImage: ubuntu-latest
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+
+                - task: TerraformInstaller@1
+                  displayName: Install Terraform
+                  inputs:
+                    terraformVersion: $(terraformVersion)
+
+                - task: TerraformTaskV4@4
+                  displayName: Terraform Init
+                  inputs:
+                    provider: azurerm
+                    command: init
+                    workingDirectory: $(workingDirectory)
+                    backendServiceArm: flowdesk-azure-connection
+                    backendAzureRmResourceGroupName: flowdesk-tfstate-rg
+                    backendAzureRmStorageAccountName: flowdesktfstate
+                    backendAzureRmContainerName: tfstate
+                    backendAzureRmKey: flowdesk.tfstate
+                  env:
+                    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+                    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+                    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+                    ARM_TENANT_ID: $(ARM_TENANT_ID)
+
+                - task: TerraformTaskV4@4
+                  displayName: Terraform Apply
+                  inputs:
+                    provider: azurerm
+                    command: apply
+                    workingDirectory: $(workingDirectory)
+                    commandOptions: "-auto-approve"
+                    environmentServiceNameAzureRM: flowdesk-azure-connection
+                  env:
+                    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+                    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+                    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+                    ARM_TENANT_ID: $(ARM_TENANT_ID)
+                    TF_VAR_environment_name: $(TF_VAR_environment_name)
+                    TF_VAR_location: $(TF_VAR_location)
+                    TF_VAR_sql_admin_login: $(TF_VAR_sql_admin_login)
+                    TF_VAR_sql_admin_password: $(TF_VAR_sql_admin_password)

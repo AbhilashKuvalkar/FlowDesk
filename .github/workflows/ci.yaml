@@ -1,0 +1,62 @@
+# .github/workflows/ci.yml
+name: FlowDesk CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore FlowDesk.slnx
+
+      - name: Build
+        run: dotnet build FlowDesk.slnx
+          --no-restore
+          --configuration Release
+
+      - name: Run tests
+        run: dotnet test FlowDesk.slnx
+          --no-build
+          --configuration Release
+          --verbosity normal
+          --logger trx
+          --results-directory TestResults
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Test Results
+          path: TestResults/*.trx
+          reporter: dotnet-trx
+
+      - name: Lint Bicep
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            az bicep lint \
+              --file infrastructure/bicep/main.bicep
+
+      - name: Validate Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "~> 1.6"
+
+      - run: terraform init -backend=false
+        working-directory: infrastructure/terraform
+
+      - run: terraform validate
+        working-directory: infrastructure/terraform

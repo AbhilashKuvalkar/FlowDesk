@@ -2,24 +2,8 @@
   <Folder Name="/Protos/">
     <File Path="/Protos/sla.proto" />
   </Folder>
-  <Folder Name="/infrastructure/">
-    <Folder Name="/infrastructure/bicep/">
-      <File Path="/infrastructure/bicep/modules/main.bicep" />
-      <Folder Name="/infrastructure/bicep/modules/">
-        <File Path="/infrastructure/bicep/modules/aks.bicep" />
-        <File Path="/infrastructure/bicep/modules/containerregistry.bicep" />
-        <File Path="/infrastructure/bicep/modules/keyvault.bicep" />
-        <File Path="/infrastructure/bicep/modules/monitoring.bicep" />
-        <File Path="/infrastructure/bicep/modules/redis.bicep" />
-        <File Path="/infrastructure/bicep/modules/sql.bicep" />
-      </Folder>
-      <Folder Name="/infrastructure/bicep/parameters/">
-        <File Path="/infrastructure/bicep/parameters/dev.bicepparam" />
-      </Folder>
-    </Folder>
-    <Folder Name="/infrastructure/pipelines/">
-      <File Path="/infrastructure/pipelines/deploy-infrastructure.yaml" />
-    </Folder>
+  <Folder Name="/.azuredevops/">
+    <File Path="/.azuredevops/deploy-infrastructure.yaml" />
   </Folder>
   <Project Path="FlowDesk.Contracts/FlowDesk.Contracts.csproj" />
   <Project Path="FlowDesk.NotificationService/FlowDesk.NotificationService.csproj" />

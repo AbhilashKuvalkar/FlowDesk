@@ -423,3 +423,6 @@ secrets.json
 
 # ASP.NET Core Data Protection keys
 DataProtection-Keys/
+
+# Excluding Terraform variable file
+terraform.tfvars
