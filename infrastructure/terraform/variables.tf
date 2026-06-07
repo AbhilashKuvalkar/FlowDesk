@@ -5,10 +5,10 @@ variable "environments" {
 
 variable "environment_name" {
   type        = string
-  description = "Deployment environment (${join(", ", var.environments)})"
+  description = "Deployment environment (dev, tst, acc, or prd)"
   validation {
     condition     = contains(var.environments, var.environment_name)
-    error_message = "environment_name must be ${join(", ", var.environments)}"
+    error_message = "environment_name must be dev, tst, acc, or prd"
   }
 }
 
@@ -19,14 +19,14 @@ variable "location" {
 }
 
 variable "sql_admin_login" {
-  type = string
+  type        = string
   description = "SQL Server administrator username"
-  sensitive = true
+  sensitive   = true
 }
 
 variable "sql_admin_password" {
-  type = string
+  type        = string
   description = "SQL Server administrator password"
-  sensitive = true
+  sensitive   = true
 }
 

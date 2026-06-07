@@ -36,15 +36,6 @@ resource "azurerm_key_vault_secret" "redis_connection_string" {
   }
 }
 
-resource "azurerm_key_vault_secret" "redis_connection_string" {
-  name         = "RedisConnectionString"
-  key_vault_id = azurerm_key_vault.this.id
-  value        = "${var.redis_hostname}:${var.redis_ssl_port},password=${var.redis_primary_key},ssl=True"
-  lifecycle {
-    prevent_destroy = true
-  }
-}
-
 resource "azurerm_role_assignment" "terraform_kv_admin" {
   scope                = azurerm_key_vault.this.id
   role_definition_name = "Key Vault Administrator"
