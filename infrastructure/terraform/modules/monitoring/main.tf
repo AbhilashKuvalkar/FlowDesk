@@ -9,7 +9,7 @@ resource "azurerm_log_analytics_workspace" "this" {
   resource_group_name             = var.resource_group_name
   location                        = var.location
   retention_in_days               = local.retentionInDays
-  local_authentication_enabled    = false
+  local_authentication_disabled   = true
   allow_resource_only_permissions = true
   internet_ingestion_enabled      = true
   internet_query_enabled          = true

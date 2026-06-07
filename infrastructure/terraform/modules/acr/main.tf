@@ -1,5 +1,5 @@
 locals {
-  acr_name = "flowdesk-acr-${var.environment_name}"
+  acr_name = "FlowDeskContainerRegistry"
 }
 
 resource "azurerm_container_registry" "this" {
