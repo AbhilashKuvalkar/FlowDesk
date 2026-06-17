@@ -30,6 +30,20 @@ variables:
     value: "1.15.5"
 
 stages:
+  - stage: ListTerraformProviderVersions
+    displayName: "List Terraform Provider Versions"
+    jobs:
+    - job: ListVersions
+      displayName: "Get Available AzureRM Provider Versions"
+      pool:
+        vmImage: 'ubuntu-latest'
+      steps:
+      - bash: |
+          echo "Fetching available versions for hashicorp/azurerm..."
+          curl -s https://registry.terraform.io/v1/providers/hashicorp/azurerm/versions \
+          | jq -r '.versions[].version' \
+          | sort -V
+        displayName: "List AzureRM Provider Versions"
   - stage: Validate
     displayName: Validate Terraform
     jobs:
